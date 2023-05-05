@@ -4,7 +4,9 @@
   import Loader from "./lib/Loader.svelte";
   import UrlCard from "./lib/UrlCard.svelte";
   import IoMdClipboard from "svelte-icons/io/IoMdClipboard.svelte";
+  import { SvelteToast } from "@zerodevx/svelte-toast";
   import { fetchUrlList, createShortUrl } from "./api";
+  import { activateToast } from "./utils";
   import { onMount } from "svelte";
 
   let newUrlLoading: boolean = false;
@@ -42,7 +44,7 @@
     const result: any = await createShortUrl(newUrl);
 
     if (!result) {
-      alert("Erro a o criar URL encurtada!");
+      activateToast("error", "Erro ao criar nova URL!");
       newUrlLoading = false;
       return;
     }
@@ -60,6 +62,7 @@
     loadingMessage = "";
     tinyUrl = result.data.tinyUrl;
     successModal = true;
+    activateToast("success", "URL criada com sucesso!");
   };
 
   const copyToClipboard = () => {
@@ -69,6 +72,7 @@
     el.select();
     document.execCommand("copy");
     document.body.removeChild(el);
+    activateToast("success", "URL copiada com sucesso!");
   };
 
   const openNewTab = (url: string) => {
@@ -80,18 +84,22 @@
   });
 </script>
 
+<SvelteToast />
+
 <div
   class="w-full h-screen bg-[url('https://i.pinimg.com/originals/1d/26/c5/1d26c5b022c071fb8f1e3ae2f0f65ba9.gif')] bg-cover bg-no-repeat bg-fixed text-gray-100"
 >
   <Header on:openModal={() => (urlListModal = true)} />
   <div class="w-full h-[800px] flex items-center justify-center">
     <div class="flex flex-col items-center justify-center space-y-8">
-      <span class="text-5xl font-bold">Encurtador de URL</span>
+      <span class="text-5xl font-bold max-small:text-center max-small:text-lg"
+        >Encurtador de URL</span
+      >
       <input
         type="text"
         placeholder="Digite sua URL"
         bind:value={newUrl}
-        class="p-2 w-[400px] h-[40px] text-black focus:outline-none"
+        class="p-2 max-small:w-[90%] w-[400px] h-[40px] text-black focus:outline-none"
       />
       <button class="px-5 bg-blue-500 py-3" on:click={handleNewShortUrl}
         >CRIAR</button
@@ -138,7 +146,7 @@
 
 <Modal show={urlListModal} on:closeModal={() => (urlListModal = false)}>
   <div
-    class="flex flex-col items-center bg-white w-[500px] h-[400px] p-4 rounded-lg"
+    class="flex flex-col items-center bg-white max-medium:w-full w-[500px] h-[400px] p-4 rounded-lg"
   >
     <span class="font-bold text-3xl">URLs encurtadas</span>
     <div

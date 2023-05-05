@@ -3,12 +3,14 @@
   export let url: string;
   export let creationDate: string;
   import IoMdClipboard from "svelte-icons/io/IoMdClipboard.svelte";
+  import { activateToast } from "../utils";
 
   const openNewTab = (url: string) => {
     window.open("https://" + url, "_blank");
   };
 
   const copyToClipboard = () => {
+    activateToast("success", "URL copiada com sucesso!");
     const el = document.createElement("textarea");
     el.value = url;
     document.body.appendChild(el);

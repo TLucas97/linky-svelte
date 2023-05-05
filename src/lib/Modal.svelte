@@ -14,7 +14,7 @@
     class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50"
   >
     <div
-      class={`${!noBg ? "bg-calm border-2" : ""} rounded-[16px] z-50`}
+      class={`${!noBg ? "bg-calm border-2" : ""} rounded-[16px] z-50 max-medium:w-[90%]`}
       transition:scale={{ duration: 350 }}
     >
       <slot />
