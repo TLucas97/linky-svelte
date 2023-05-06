@@ -1,18 +1,21 @@
 <script lang="ts">
   export let name: string;
-  export let url: string;
   export let creationDate: string;
+  export let tinyUrl: string;
   import IoMdClipboard from "svelte-icons/io/IoMdClipboard.svelte";
   import { activateToast } from "../utils";
+  import { useNavigate } from "svelte-navigator";
+
+  const navigate = useNavigate();
 
   const openNewTab = (url: string) => {
-    window.open("https://" + url, "_blank");
+    navigate(`/redirect/${url}`);
   };
 
-  const copyToClipboard = () => {
+  const copyToClipboard = (tinyUrl: string) => {
     activateToast("success", "URL copiada com sucesso!");
     const el = document.createElement("textarea");
-    el.value = url;
+    el.value = `linky-svelte.vercel.app/redirect/${tinyUrl}`;
     document.body.appendChild(el);
     el.select();
     document.execCommand("copy");
@@ -29,16 +32,16 @@
     <div class="w-[80%] max-w-[80%] line-clamp-1">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <span
-        on:click={() => openNewTab(url)}
+        on:click={() => openNewTab(tinyUrl)}
         class="text-blue-600 underline hover:opacity-70 cursor-pointer"
-        title="Abrir link">{url}</span
+        title="Abrir link">{`linky-svelte.vercel.app/redirect/${tinyUrl}`}</span
       >
     </div>
     <div>
       <button
         title="Copiar link"
         class="w-[20px] text-gray-400"
-        on:click={copyToClipboard}
+        on:click={() => copyToClipboard(tinyUrl)}
       >
         <IoMdClipboard />
       </button>
