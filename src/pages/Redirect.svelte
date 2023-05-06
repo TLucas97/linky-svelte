@@ -5,13 +5,16 @@
   import { useNavigate } from "svelte-navigator";
 
   const registerFocus = useFocus();
-
   const navigate = useNavigate();
-
   const params = useParams();
+  const BASE_URL = import.meta.env.VITE_BASE_API_URL;
 
   const forceRedirect = () => {
-    window.location.href = `https://linkshortener-production-99e0.up.railway.app/api/${$params.id}`;
+    window.location.href = `${BASE_URL}/${$params.id}`;
+
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
   };
 
   onMount(() => {

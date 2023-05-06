@@ -6,9 +6,9 @@
   import IoMdClipboard from "svelte-icons/io/IoMdClipboard.svelte";
   import { SvelteToast } from "@zerodevx/svelte-toast";
   import { fetchUrlList, createShortUrl } from "../api";
-  import { activateToast } from "../utils";
-  import { useNavigate } from "svelte-navigator";
+  import { activateToast, copyToClipboard, convertDate } from "../utils";
   import { onMount } from "svelte";
+  import { useNavigate } from "svelte-navigator";
 
   const navigate = useNavigate();
 
@@ -19,15 +19,7 @@
   let newUrl: string = "";
   let tinyUrl: string = "";
   let loadingMessage: string = "";
-
-  const convertTimeStampToBrDate = (date: any) => {
-    date = new Date();
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-
-    return `${day}/${month}/${year}`;
-  };
+  const BASE_APP_URL = import.meta.env.VITE_BASE_APP_URL;
 
   const handleUrlFetching = async () => {
     newUrlLoading = true;
@@ -68,18 +60,8 @@
     activateToast("success", "Link criada com sucesso!");
   };
 
-  const copyToClipboard = () => {
-    const el = document.createElement("textarea");
-    el.value = tinyUrl;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-    activateToast("success", "Link copiada com sucesso!");
-  };
-
-  const openNewTab = (nanoid: string) => {
-    navigate(`/redirect/${nanoid}`);
+  const openNewTab = (url: string) => {
+    navigate(`/redirect/${url}`);
   };
 
   onMount(async () => {
@@ -120,17 +102,20 @@
 
 <Modal show={successModal} noBg on:closeModal={() => (successModal = false)}>
   <div class="flex flex-col items-center text-white">
-    <span class="text-3xl font-bold"> Sua nova URL encurtada está pronta!</span>
+    <span class="text-3xl font-bold">
+      Sua novo link encurtada está pronta!</span
+    >
     <span class="text-3xl font-bold"> Clique abaixo para acessar.</span>
     <div class="flex items-center space-x-3 bg-white mt-10 py-2 px-4">
       <button
         on:click={() => openNewTab(tinyUrl)}
-        class="text-blue-500 underline cursor-pointer">{tinyUrl}</button
+        class="text-blue-500 underline cursor-pointer"
+        >{`${BASE_APP_URL}/${tinyUrl}`}</button
       >
       <button
         title="Copiar link"
         class="w-[20px] text-gray-400"
-        on:click={copyToClipboard}
+        on:click={() => copyToClipboard(tinyUrl)}
       >
         <IoMdClipboard />
       </button>
@@ -151,16 +136,16 @@
   <div
     class="flex flex-col items-center bg-white max-medium:w-full w-[500px] h-[400px] p-4 rounded-lg"
   >
-    <span class="font-bold text-3xl">URLs encurtadas</span>
+    <span class="font-bold text-3xl">Links encurtados</span>
     <div
-      class="w-full flex flex-col space-y-4 overflow-x-hidden"
+      class="w-full flex flex-col space-y-4 overflow-x-hidden border-2 border-gray-400 mt-5 px-3 py-2"
       class:overflow-scroll={urlList.length > 3}
     >
       {#each urlList as url}
         <UrlCard
           name={url.name.toUpperCase()}
           tinyUrl={url.tinyUrl}
-          creationDate={convertTimeStampToBrDate(url.timestamp)}
+          creationDate={convertDate(url.timestamp)}
         />
       {/each}
     </div>
