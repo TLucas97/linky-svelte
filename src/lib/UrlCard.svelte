@@ -15,7 +15,7 @@
   const copyToClipboard = (tinyUrl: string) => {
     activateToast("success", "URL copiada com sucesso!");
     const el = document.createElement("textarea");
-    el.value = `linky-svelte.vercel.app/redirect/${tinyUrl}`;
+    el.value = `https://linky-svelte.vercel.app/redirect/${tinyUrl}`;
     document.body.appendChild(el);
     el.select();
     document.execCommand("copy");
