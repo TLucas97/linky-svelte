@@ -134,7 +134,7 @@
 
 <Modal show={urlListModal} on:closeModal={() => (urlListModal = false)}>
   <div
-    class="flex flex-col items-center bg-white max-medium:w-full w-[500px] h-[400px] p-4 rounded-lg"
+    class="flex flex-col items-center bg-white max-medium:w-full w-[600px] h-[400px] p-4 rounded-lg"
   >
     <span class="font-bold text-3xl">Links encurtados</span>
     <div

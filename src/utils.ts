@@ -31,7 +31,7 @@ export const activateToast = (type: string, message: string) => {
 };
 
 export const copyToClipboard = (tinyUrl: string) => {
-  activateToast("success", "URL copiada com sucesso!");
+  activateToast("success", "Link copiado com sucesso!");
   const el = document.createElement("textarea");
   el.value = `${BASE_APP_URL}/redirect/${tinyUrl}`;
   document.body.appendChild(el);

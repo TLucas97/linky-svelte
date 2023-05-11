@@ -15,39 +15,30 @@
   const BASE_APP_URL = import.meta.env.VITE_BASE_APP_URL;
 </script>
 
-<div class="w-full flex flex-col space-y-1 bg-gray-700 p-2">
-  <div class="w-full h-[50px] bg-gray-200 flex items-center px-2">
-    <div
-      class="w-[19%] max-medium:w-[50%] flex items-center justify-center truncate"
-    >
-      <span class="font-bold line-clamp-1"> {name} </span>
-    </div>
-    <hr class="w-[1px] h-full bg-white mx-3" />
-    <div class="w-[80%] max-medium:w-[50%] flex justify-between">
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <div class="w-[90%] truncate">
-        <span
-          on:click={() => openNewTab(tinyUrl)}
-          class="text-blue-600 underline hover:opacity-70 cursor-pointer"
-          title="Abrir link">{`${BASE_APP_URL}/redirect/${tinyUrl}`}</span
-        >
-      </div>
+<div class="my-2 w-full">
+  <div
+    class="flex items-center justify-between border border-gray-300 px-2 py-2 text-sm text-gray-600 max-small:flex-col"
+  >
+    <span>{name}</span>
+    <div class="flex items-center gap-x-2">
+      <button
+        on:click={() => openNewTab(tinyUrl)}
+        class="... max-w-[200px] truncate text-blue-600 underline max-extraSmall:max-w-[100px]"
+        >{`${BASE_APP_URL}/${tinyUrl}`}</button
+      >
       <button
         title="Copiar link"
-        class="w-[20px] text-gray-400"
+        class="w-[20px] text-gray-400 hover:text-green-600"
         on:click={() => copyToClipboard(tinyUrl)}
       >
         <IoMdClipboard />
       </button>
     </div>
   </div>
-  <div class="w-full h-[50px] bg-gray-200 flex items-center px-2">
-    <div class="max-medium:w-[42.5%] flex items-center justify-center">
-      <span class="font-bold"> CRIAÇÃO </span>
-    </div>
-    <hr class="w-[1px] h-full bg-white mx-3" />
-    <div class="max-medium:w-[50%]">
-      <span>{creationDate}</span>
-    </div>
+  <div
+    class="flex items-center justify-between border border-gray-300 px-2 py-2 text-sm text-gray-600 max-small:flex-col"
+  >
+    <span>Data de criação</span>
+    <span>{creationDate}</span>
   </div>
 </div>

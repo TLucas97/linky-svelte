@@ -4,6 +4,7 @@ const config = {
   theme: {
     screens: {
       small: "460px",
+      extraSmall: '360px',
       medium: "680px",
     },
     extend: {},
