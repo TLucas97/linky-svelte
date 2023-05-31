@@ -45,7 +45,7 @@
     }
 
     if (result.data.status !== 200) {
-      alert(result.data.message);
+      activateToast("error", result.data.message);
       newUrlLoading = false;
       return;
     }
@@ -72,10 +72,10 @@
 <SvelteToast />
 
 <div
-  class="w-full h-screen bg-[url('https://i.pinimg.com/originals/1d/26/c5/1d26c5b022c071fb8f1e3ae2f0f65ba9.gif')] bg-cover bg-no-repeat bg-fixed text-gray-100"
+  class="h-screen w-full bg-[url('https://i.pinimg.com/originals/1d/26/c5/1d26c5b022c071fb8f1e3ae2f0f65ba9.gif')] bg-cover bg-fixed bg-no-repeat text-gray-100"
 >
   <Header on:openModal={() => (urlListModal = true)} />
-  <div class="w-full h-[800px] flex items-center justify-center">
+  <div class="flex h-[800px] w-full items-center justify-center">
     <div class="flex flex-col items-center justify-center space-y-8">
       <span class="text-5xl font-bold max-small:text-center max-small:text-lg"
         >Encurtador de links</span
@@ -84,9 +84,9 @@
         type="text"
         placeholder="Digite sua URL"
         bind:value={newUrl}
-        class="p-2 max-small:w-[90%] w-[400px] h-[40px] text-black focus:outline-none"
+        class="h-[40px] w-[400px] p-2 text-black focus:outline-none max-small:w-[90%]"
       />
-      <button class="px-5 bg-blue-500 py-3" on:click={handleNewShortUrl}
+      <button class="bg-blue-500 px-5 py-3" on:click={handleNewShortUrl}
         >CRIAR</button
       >
     </div>
@@ -106,10 +106,10 @@
       Sua novo link encurtada está pronta!</span
     >
     <span class="text-3xl font-bold"> Clique abaixo para acessar.</span>
-    <div class="flex items-center space-x-3 bg-white mt-10 py-2 px-4">
+    <div class="mt-10 flex items-center space-x-3 bg-white px-4 py-2">
       <button
         on:click={() => openNewTab(tinyUrl)}
-        class="text-blue-500 underline cursor-pointer"
+        class="cursor-pointer text-blue-500 underline"
         >{`${BASE_APP_URL}/${tinyUrl}`}</button
       >
       <button
@@ -121,7 +121,7 @@
       </button>
     </div>
     <button
-      class="bg-blue-500 text-white px-5 py-2 mt-5"
+      class="mt-5 bg-blue-500 px-5 py-2 text-white"
       on:click={() => {
         successModal = false;
         tinyUrl = "";
@@ -134,11 +134,11 @@
 
 <Modal show={urlListModal} on:closeModal={() => (urlListModal = false)}>
   <div
-    class="flex flex-col items-center bg-white max-medium:w-full w-[600px] h-[400px] p-4 rounded-lg"
+    class="flex h-[400px] w-[600px] flex-col items-center rounded-lg bg-white p-4 max-medium:w-full"
   >
-    <span class="font-bold text-3xl">Links encurtados</span>
+    <span class="text-3xl font-bold">Links encurtados</span>
     <div
-      class="w-full flex flex-col space-y-4 overflow-x-hidden border-2 border-gray-400 mt-5 px-3 py-2"
+      class="mt-5 flex w-full flex-col space-y-4 overflow-x-hidden border-2 border-gray-400 px-3 py-2"
       class:overflow-scroll={urlList.length > 3}
     >
       {#each urlList as url}
@@ -151,7 +151,7 @@
     </div>
     <div />
     <button
-      class="bg-blue-500 text-white px-5 py-2 mt-5"
+      class="mt-5 bg-blue-500 px-5 py-2 text-white"
       on:click={() => (urlListModal = false)}
     >
       FECHAR
